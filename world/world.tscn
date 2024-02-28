@@ -1,0 +1,35 @@
+[gd_scene load_steps=7 format=3 uid="uid://cs0kx30xt3nox"]
+
+[ext_resource type="Script" path="res://world/world.gd" id="1_nou35"]
+[ext_resource type="PackedScene" uid="uid://b80l4uefpqidn" path="res://player/player.tscn" id="2_5t8f1"]
+[ext_resource type="PackedScene" uid="uid://bwgou3yem5e6m" path="res://world/level_one.tscn" id="6_yqjwf"]
+[ext_resource type="PackedScene" uid="uid://dept47203qinf" path="res://ui/health_meter.tscn" id="8_qwdxa"]
+[ext_resource type="PackedScene" uid="uid://bv1ll55ok5kc5" path="res://menus/pause_menu.tscn" id="9_04h5j"]
+[ext_resource type="PackedScene" uid="uid://ugm03i85goq4" path="res://ui/missile_ui.tscn" id="13_f2o1a"]
+
+[node name="World" type="Node2D"]
+script = ExtResource("1_nou35")
+metadata/_edit_lock_ = true
+
+[node name="Player" parent="." instance=ExtResource("2_5t8f1")]
+position = Vector2(-75, 112)
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="HealthMeter" parent="UI" instance=ExtResource("8_qwdxa")]
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 4.0
+offset_bottom = 4.0
+
+[node name="MissileUI" parent="UI" instance=ExtResource("13_f2o1a")]
+offset_left = 3.0
+offset_top = 16.0
+offset_right = 16.0
+offset_bottom = 26.0
+
+[node name="PauseMenu" parent="UI" instance=ExtResource("9_04h5j")]
+visible = false
+
+[node name="LevelOne" parent="." instance=ExtResource("6_yqjwf")]
+metadata/_edit_lock_ = true
