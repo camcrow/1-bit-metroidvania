@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://856men51dhyx"]
+
+[ext_resource type="PackedScene" uid="uid://ddroj6tthf0fy" path="res://projectile.tscn" id="1_5duge"]
+[ext_resource type="Texture2D" uid="uid://cwwtnfa1s31jo" path="res://enemies/boss_stinger.png" id="2_8iirk"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_534rx"]
+size = Vector2(24, 2)
+
+[node name="Stinger" instance=ExtResource("1_5duge")]
+
+[node name="Sprite2D" type="Sprite2D" parent="." index="0"]
+rotation = -0.785397
+texture = ExtResource("2_8iirk")
+
+[node name="VisibleOnScreenNotifier2D" parent="." index="1"]
+position = Vector2(0, 4.76837e-07)
+scale = Vector2(1, 0.2)
+
+[node name="Hitbox" parent="." index="2"]
+collision_mask = 17
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" index="0"]
+position = Vector2(1, 0)
+shape = SubResource("RectangleShape2D_534rx")

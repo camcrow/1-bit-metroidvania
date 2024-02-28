@@ -1,0 +1,104 @@
+[gd_scene load_steps=17 format=3 uid="uid://m82wh3p5xtmi"]
+
+[ext_resource type="Texture2D" uid="uid://iog8gpcxeifc" path="res://enemies/flying_enemy.png" id="1_fpmcb"]
+[ext_resource type="Script" path="res://enemies/flying_enemy.gd" id="1_xh8ai"]
+[ext_resource type="PackedScene" uid="uid://hnip4hi375te" path="res://collisions/hurtbox.tscn" id="3_el4dl"]
+[ext_resource type="PackedScene" uid="uid://c8o3bq404c8da" path="res://collisions/hitbox.tscn" id="4_1gqfs"]
+[ext_resource type="PackedScene" uid="uid://bkc57y34bc3jl" path="res://stats.tscn" id="5_ky6aq"]
+[ext_resource type="PackedScene" uid="uid://cb7aaum6o603q" path="res://enemies/waypoint_pathfinding.tscn" id="6_4sg75"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hnaqh"]
+atlas = ExtResource("1_fpmcb")
+region = Rect2(0, 0, 32, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t0slq"]
+atlas = ExtResource("1_fpmcb")
+region = Rect2(32, 0, 32, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_do5uk"]
+atlas = ExtResource("1_fpmcb")
+region = Rect2(64, 0, 32, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wxyqk"]
+atlas = ExtResource("1_fpmcb")
+region = Rect2(96, 0, 32, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qkkrk"]
+atlas = ExtResource("1_fpmcb")
+region = Rect2(128, 0, 32, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yfe57"]
+atlas = ExtResource("1_fpmcb")
+region = Rect2(160, 0, 32, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ddkvx"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hnaqh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t0slq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_do5uk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wxyqk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qkkrk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yfe57")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_p1rrh"]
+radius = 6.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_75yrs"]
+radius = 8.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ngw0w"]
+radius = 5.0
+
+[node name="FlyingEnemy" type="CharacterBody2D"]
+collision_layer = 8
+collision_mask = 9
+motion_mode = 1
+script = ExtResource("1_xh8ai")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_ddkvx")
+autoplay = "default"
+flip_h = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_p1rrh")
+
+[node name="Hurtbox" parent="." instance=ExtResource("3_el4dl")]
+collision_layer = 32
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(0, -1)
+shape = SubResource("CircleShape2D_75yrs")
+
+[node name="Hitbox" parent="." instance=ExtResource("4_1gqfs")]
+collision_mask = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource("CircleShape2D_ngw0w")
+
+[node name="Stats" parent="." instance=ExtResource("5_ky6aq")]
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[node name="WaypointPathfinding" parent="." instance=ExtResource("6_4sg75")]
+
+[connection signal="hurt" from="Hurtbox" to="." method="_on_hurtbox_hurt"]
+[connection signal="no_health" from="Stats" to="." method="_on_stats_no_health"]
+[connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]

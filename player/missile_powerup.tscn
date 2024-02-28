@@ -1,0 +1,19 @@
+[gd_scene load_steps=5 format=3 uid="uid://de3bg73yhun0k"]
+
+[ext_resource type="PackedScene" uid="uid://7jnysca064gb" path="res://player/powerup.tscn" id="1_qd8sm"]
+[ext_resource type="Texture2D" uid="uid://wexfdoaqwixk" path="res://player/player_missile.png" id="2_s2s0v"]
+[ext_resource type="Script" path="res://player/missile_powerup.gd" id="2_y84p8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yoorl"]
+size = Vector2(6, 15)
+
+[node name="MissilePowerup" instance=ExtResource("1_qd8sm")]
+script = ExtResource("2_y84p8")
+
+[node name="Sprite2D" parent="." index="0"]
+rotation = -1.57079
+texture = ExtResource("2_s2s0v")
+
+[node name="CollisionShape2D" parent="." index="1"]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_yoorl")
